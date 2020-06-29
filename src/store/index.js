@@ -52,7 +52,51 @@ const initialState = {
     }),
   },
   club:{
-
+    items: [],
+    lastClub: {},
+    loading: false,
+    err: { msg: '', active: false },
+    addItems: action((state, payload) => {
+      state.items.push(payload);
+    }),
+    fetchingItems: action((state) => {
+      state.loading = true;
+    }),
+    fetchingItemsDone: action((state) => {
+      state.loading = false;
+    }),
+    setLastClub: action((state, payload) => {
+      state.lastBrawler = { ...payload };
+    }),
+    setErr: action((state, payload) => {
+      state.err = payload;
+    }),
+    fetchItems: thunk(async (actions, clubTag) => {
+      const url = `${apiUrl}/club`;
+      actions.fetchingItems();
+      try {
+        const result = await axios.post(url, { clubTag });
+        // return
+        if (result.data.name) {
+          actions.addItems(result.data);
+          actions.setLastBrawler(result.data);
+          actions.fetchingItemsDone();
+          actions.setErr({ msg: '', active: false });
+          console.log(result.data);
+        }
+        if (result.data.err) {
+          actions.fetchingItemsDone();
+          actions.setLastBrawler(result.data);
+          actions.setErr({
+            msg: 'Club not found with this Club Tag',
+            active: true,
+          });
+          console.log(result.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }),
   }
 };
 

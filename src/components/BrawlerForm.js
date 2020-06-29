@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Col, Preloader, Row } from 'react-materialize';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 
@@ -72,7 +72,6 @@ const BrawlerForm = () => {
             )}
           </div>
         </form>
-        {/*<span>{playerTag}</span>*/}
       </Col>
     </Row>
   );
