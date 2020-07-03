@@ -7,6 +7,9 @@ import './App.css';
 import AppNavbar from './components/AppNavbar';
 import Homepage from './pages/Homepage';
 import Club from './pages/Club';
+import Bestplayers from './pages/Bestplayers';
+import Bestclubs from './pages/Bestclubs';
+import AppFooter from "./components/AppFooter";
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
         <AppNavbar />
         <Route path='/' exact component={Homepage} />
         <Route path='/clubs' exact component={Club} />
+        <Route path='/bestplayers' exact component={Bestplayers} />
+        <Route path='/bestclubs' exact component={Bestclubs} />
+        <AppFooter/>
       </Router>
     </StoreProvider>
   );

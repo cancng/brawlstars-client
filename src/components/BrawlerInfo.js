@@ -27,50 +27,7 @@ const brawlerNameFixer = (brawlerName) => {
 };
 
 const BrawlerInfo = ({ brawler }) => {
-  const brawlerCards = brawler.brawlers.map((owned) => (
-    <Col m={4} key={owned.id}>
-      <Card
-        header={
-          <CardTitle
-            image={`https://brawlace.com/assets/images/brawlers/${brawlerNameFixer(
-              owned.name
-            )}.png`}
-          >
-            {owned.name}
-          </CardTitle>
-        }
-      >
-        <ul>
-          <li>Power: {owned.power}</li>
-          <li>Rank: {owned.rank}</li>
-          <li>Trophies: {owned.trophies}</li>
-          <li>Highest Trophies: {owned.highestTrophies}</li>
-          <li>
-            {owned.gadgets.length > 0 ? (
-              <span>
-                Gadget:{' '}
-                <span className='green-text'>{owned.gadgets[0].name}</span>
-              </span>
-            ) : (
-              <span>
-                Gadget: <Icon className='red-text'>block</Icon>
-              </span>
-            )}
-          </li>
-          <li>
-            Star Powers:{' '}
-            {owned.starPowers.length > 0 ? (
-              owned.starPowers.map((starPower) => (
-                <span>-{starPower.name}-</span>
-              ))
-            ) : (
-              <Icon className='red-text'>block</Icon>
-            )}
-          </li>
-        </ul>
-      </Card>
-    </Col>
-  ));
+
   return (
     <>
       <Row>
@@ -87,7 +44,7 @@ const BrawlerInfo = ({ brawler }) => {
                 {brawler.club.name} ({brawler.club.tag})
               </span>
             ) : (
-              <Icon className="red-text">remove_circle_outline</Icon>
+              <Icon className='red-text'>remove_circle_outline</Icon>
             )}
           </h4>
         </Row>
@@ -155,7 +112,52 @@ const BrawlerInfo = ({ brawler }) => {
       </Row>
 
       <Row>
-        {brawlerCards}
+        {brawler.brawlers.map((owned) => (
+          <Col m={4} key={owned.id}>
+            <Card
+              header={
+                <CardTitle
+                  image={`https://brawlace.com/assets/images/brawlers/${brawlerNameFixer(
+                    owned.name
+                  )}.png`}
+                >
+                  {owned.name}
+                </CardTitle>
+              }
+            >
+              <ul>
+                <li>Power: {owned.power}</li>
+                <li>Rank: {owned.rank}</li>
+                <li>Trophies: {owned.trophies}</li>
+                <li>Highest Trophies: {owned.highestTrophies}</li>
+                <li>
+                  {owned.gadgets.length > 0 ? (
+                    <span>
+                      Gadget:{' '}
+                      <span className='green-text'>
+                        {owned.gadgets[0].name}
+                      </span>
+                    </span>
+                  ) : (
+                    <span>
+                      Gadget: <Icon className='red-text'>block</Icon>
+                    </span>
+                  )}
+                </li>
+                <li>
+                  Star Powers:{' '}
+                  {owned.starPowers.length > 0 ? (
+                    owned.starPowers.map((starPower) => (
+                      <span key={starPower.id}>-{starPower.name}-</span>
+                    ))
+                  ) : (
+                    <Icon className='red-text'>block</Icon>
+                  )}
+                </li>
+              </ul>
+            </Card>
+          </Col>
+        ))}
       </Row>
     </>
   );

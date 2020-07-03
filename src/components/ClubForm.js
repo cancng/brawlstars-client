@@ -15,9 +15,28 @@ const ClubForm = () => {
   const isFetching = useStoreState((state) => state.club.loading);
   const isErr = useStoreState((state) => state.club.err);
   const formOnSubmit = (e) => {
-    // TODO: This component will be completed
     e.preventDefault();
-    console.log('form submitted');
+    if (!clubTag) {
+      setError({ msg: 'Club tag can not be empty', active: true });
+      return;
+    }
+    if (!clubTag.startsWith('#')) {
+      setError({ msg: 'Club tag must start with #', active: true });
+      return;
+    }
+    const isClubExistInStore = clubStore.find(
+      (brawler) => brawler.tag === clubTag
+    );
+    if (isClubExistInStore) {
+      setLastClub(isClubExistInStore);
+      /*console.log(
+        'already in store, fetching from store...',
+        isClubExistInStore
+      );*/
+    } else {
+      fetchClub(clubTag);
+      // console.log('new club detected, fetching...');
+    }
   };
   return (
     <Row>

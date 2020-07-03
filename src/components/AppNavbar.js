@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Navbar, NavItem } from 'react-materialize';
+import { Dropdown, Icon, Navbar } from 'react-materialize';
 import { NavLink } from 'react-router-dom';
 
 const AppNavbar = () => {
@@ -30,7 +30,29 @@ const AppNavbar = () => {
       >
         {/*<NavItem href='clubs'>Search Club</NavItem>*/}
         <NavLink to='clubs'>Search Club</NavLink>
-        <NavItem href='components'>Components</NavItem>
+        <Dropdown
+          id="ranking_dropdown"
+          options={{
+            alignment: 'left',
+            autoTrigger: true,
+            closeOnClick: true,
+            constrainWidth: true,
+            container: null,
+            coverTrigger: true,
+            hover: false,
+            inDuration: 150,
+            onCloseEnd: null,
+            onCloseStart: null,
+            onOpenEnd: null,
+            onOpenStart: null,
+            outDuration: 250
+          }}
+          trigger={<a href="#!">Rankings{' '}<Icon right>arrow_drop_down</Icon></a>}
+        >
+          <NavLink to='bestplayers'>Players</NavLink>
+          <NavLink to='bestclubs'>Clubs</NavLink>
+        </Dropdown>
+        {/*<NavItem href='components'>Components</NavItem>*/}
       </Navbar>
     </div>
   );

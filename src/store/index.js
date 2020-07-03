@@ -35,7 +35,7 @@ const initialState = {
           actions.setLastBrawler(result.data);
           actions.fetchingItemsDone();
           actions.setErr({ msg: '', active: false });
-          console.log(result.data);
+          // console.log(result.data);
         }
         if (result.data.err) {
           actions.fetchingItemsDone();
@@ -44,14 +44,14 @@ const initialState = {
             msg: 'Player not found with this Player Tag',
             active: true,
           });
-          console.log(result.data);
+          // console.log(result.data);
         }
       } catch (e) {
         console.log(e);
       }
     }),
   },
-  club:{
+  club: {
     items: [],
     lastClub: {},
     loading: false,
@@ -66,7 +66,7 @@ const initialState = {
       state.loading = false;
     }),
     setLastClub: action((state, payload) => {
-      state.lastBrawler = { ...payload };
+      state.lastClub = { ...payload };
     }),
     setErr: action((state, payload) => {
       state.err = payload;
@@ -79,25 +79,119 @@ const initialState = {
         // return
         if (result.data.name) {
           actions.addItems(result.data);
-          actions.setLastBrawler(result.data);
+          actions.setLastClub(result.data);
           actions.fetchingItemsDone();
           actions.setErr({ msg: '', active: false });
-          console.log(result.data);
+          //console.log(result.data);
         }
         if (result.data.err) {
           actions.fetchingItemsDone();
-          actions.setLastBrawler(result.data);
+          actions.setLastClub(result.data);
           actions.setErr({
             msg: 'Club not found with this Club Tag',
             active: true,
           });
-          console.log(result.data);
+          // console.log(result.data);
         }
       } catch (e) {
         console.log(e);
       }
     }),
-  }
+  },
+  player_rankings: {
+    items: [],
+    lastRegion: [],
+    loading: false,
+    err: { msg: '', active: false },
+    addItems: action((state, payload) => {
+      state.items.push(payload);
+    }),
+    fetchingItems: action((state) => {
+      state.loading = true;
+    }),
+    fetchingItemsDone: action((state) => {
+      state.loading = false;
+    }),
+    setLastRegion: action((state, payload) => {
+      state.lastRegion = payload;
+    }),
+    setErr: action((state, payload) => {
+      state.err = payload;
+    }),
+    fetchItems: thunk(async (actions, country) => {
+      const url = `${apiUrl}/rankings`;
+      actions.fetchingItems();
+      try {
+        const result = await axios.post(url, { country,type:'players' });
+        // return
+        if (result.data.ranks.length>10) {
+          actions.addItems(result.data);
+          actions.setLastRegion(result.data);
+          actions.fetchingItemsDone();
+          actions.setErr({ msg: '', active: false });
+          //console.log(result.data);
+        }
+        if (result.data.err) {
+          actions.fetchingItemsDone();
+          actions.setLastClub(result.data);
+          actions.setErr({
+            msg: 'ERROR',
+            active: true,
+          });
+          // console.log(result.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }),
+  },
+  club_rankings: {
+    items: [],
+    lastRegion: [],
+    loading: false,
+    err: { msg: '', active: false },
+    addItems: action((state, payload) => {
+      state.items.push(payload);
+    }),
+    fetchingItems: action((state) => {
+      state.loading = true;
+    }),
+    fetchingItemsDone: action((state) => {
+      state.loading = false;
+    }),
+    setLastRegion: action((state, payload) => {
+      state.lastRegion = payload;
+    }),
+    setErr: action((state, payload) => {
+      state.err = payload;
+    }),
+    fetchItems: thunk(async (actions, country) => {
+      const url = `${apiUrl}/rankings`;
+      actions.fetchingItems();
+      try {
+        const result = await axios.post(url, { country,type:'clubs' });
+        // return
+        if (result.data.ranks.length>10) {
+          actions.addItems(result.data);
+          actions.setLastRegion(result.data);
+          actions.fetchingItemsDone();
+          actions.setErr({ msg: '', active: false });
+          //console.log(result.data);
+        }
+        if (result.data.err) {
+          actions.fetchingItemsDone();
+          actions.setLastClub(result.data);
+          actions.setErr({
+            msg: 'ERROR',
+            active: true,
+          });
+          // console.log(result.data);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }),
+  },
 };
 
 export default createStore(initialState);
