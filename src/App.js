@@ -20,7 +20,7 @@ function App() {
         <Route path='/clubs' exact component={Club} />
         <Route path='/bestplayers' exact component={Bestplayers} />
         <Route path='/bestclubs' exact component={Bestclubs} />
-        <AppFooter/>
+        {/*<AppFooter/>*/}
       </Router>
     </StoreProvider>
   );
