@@ -9,7 +9,6 @@ import Homepage from './pages/Homepage';
 import Club from './pages/Club';
 import Bestplayers from './pages/Bestplayers';
 import Bestclubs from './pages/Bestclubs';
-import AppFooter from "./components/AppFooter";
 
 function App() {
   return (
